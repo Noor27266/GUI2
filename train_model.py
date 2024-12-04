@@ -74,14 +74,18 @@ save_dir = r"F:\Graphical User Interface\GUI2\saved_model"
 if not os.path.exists(save_dir):
     os.makedirs(save_dir)
 
-# Save the trained model in the SavedModel format
-model.save(save_dir)
-print(f"Model saved at: {save_dir}")
+# Save the trained model in the .keras format
+model.save(r"F:\Graphical User Interface\GUI2\saved_model\model_saved_model.keras")
+print(f"Model saved in .keras format at: F:/Graphical User Interface/GUI2/saved_model/model_saved_model.keras")
+
+# Save the trained model in the .h5 format
+model.save(r"F:\Graphical User Interface\GUI2\saved_model\model_saved_model.h5")
+print(f"Model saved in .h5 format at: F:/Graphical User Interface/GUI2/saved_model/model_saved_model.h5")
 
 # Evaluate the model
 loss = model.evaluate(X_test_scaled, y_test)
 print(f"Test Loss: {loss}")
 
 # Load the saved model to verify it works correctly
-loaded_model = tf.keras.models.load_model(save_dir)
+loaded_model = tf.keras.models.load_model(r"F:\Graphical User Interface\GUI2\saved_model\model_saved_model.keras")
 print("Model loaded successfully!")
