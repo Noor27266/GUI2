@@ -100,7 +100,7 @@ except FileNotFoundError:
     joblib.dump(scaler, 'scaler.pkl')
 
 # Step 3: Load the trained model
-model_path = r"F:\Graphical User Interface\GUI2\new_model_synthetic.keras"
+model_path = r"F:/Graphical User Interface/GUI2/saved_model/model_saved_model.keras"
 model = tf.keras.models.load_model(model_path)
 
 # Streamlit Interface
