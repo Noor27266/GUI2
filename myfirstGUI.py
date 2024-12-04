@@ -3,8 +3,10 @@ import numpy as np
 import joblib
 from sklearn.preprocessing import StandardScaler
 import tensorflow as tf
-print(tf.__version__)
+import gdown
+import os
 
+print(tf.__version__)
 
 # Step 1: Set Streamlit page config to fixed layout (not full width)
 st.set_page_config(page_title="RC Shear Wall Prediction", layout="centered")
@@ -17,7 +19,6 @@ st.markdown("""
             font-size: 18px;
             font-weight: bold;
             margin-bottom: 3px;
-            
         }
         .st-header {
             background-color: #B2D0D0;
@@ -35,37 +36,31 @@ st.markdown("""
             width: 60%;
         }
 
-        /* More specific selectors for streamlit header customization */
         .stTextInput, .stNumberInput, .stSelectbox, .stCheckbox {
             font-size: 14px;
         }
 
-        /* Styling the headers of the input fields specifically */
         .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
             font-size: 18px !important;
         }
 
-        /* Add padding to the left and right of the input fields */
         .stColumns {
             padding-left: 20%;
             padding-right: 20%;
         }
 
-        /* Create space between left and right columns */
         .column-gap {
             display: flex;
-            gap: 70px;  /* Increase space between columns */
+            gap: 70px;
             justify-content: center;
         }
 
-        /* Reduce the overall width for a better appearance */
         .main-content {
             width: 60%;
             margin: 0 auto;
             padding: 20px;
         }
 
-        /* Result container and icon */
         .result-container {
             display: flex;
             justify-content: center;
@@ -99,9 +94,20 @@ except FileNotFoundError:
     scaler.fit(default_data)
     joblib.dump(scaler, 'scaler.pkl')
 
-# Step 3: Load the trained model
-model_path = r"F:/Graphical User Interface/GUI2/saved_model/model_saved_model.keras"
-model = tf.keras.models.load_model(model_path)
+# Step 3: Download model from Google Drive and load
+model_file_path = 'new_model_synthetic.keras'
+
+# Google Drive File ID from the link
+file_id = '1dFnrf2aZHGOQASjIwndN7y9X7XFrP2ZC'
+
+# Construct the Google Drive download URL
+url = f'https://drive.google.com/uc?export=download&id={file_id}'
+
+# Download the file using gdown
+gdown.download(url, model_file_path, quiet=False)
+
+# Load the trained model
+model = tf.keras.models.load_model(model_file_path)
 
 # Streamlit Interface
 st.title('Enter your RC shear wall data:')
